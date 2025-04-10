@@ -1,6 +1,6 @@
-
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import logo from "./assets/NuevoLogoZuru.png"; // 👈 Importas tu logo
 
 const API_URL = "https://zuru.onrender.com/classify";
 
@@ -16,7 +16,7 @@ export default function App() {
       const response = await fetch(API_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ descripcion: input })
+        body: JSON.stringify({ descripcion: input }),
       });
       const data = await response.json();
       setSuggestion(data.categoria || "Sin coincidencias claras");
@@ -28,18 +28,28 @@ export default function App() {
   };
 
   return (
-    <div style={{
-      minHeight: "100vh",
-      backgroundColor: "#f3f4f6",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "1rem"
-    }}>
+    <div
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#f3f4f6",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "1rem",
+      }}
+    >
+      {/* 👇 AQUÍ ESTÁ EL LOGO */}
+      <img
+        src={logo}
+        alt="Logo"
+        style={{ width: "220px", marginBottom: "1rem" }}
+      />
+
       <h1 style={{ fontSize: "1.5rem", fontWeight: "bold", marginBottom: "1rem" }}>
         Clasificador de mercancías (IA)
       </h1>
+
       <input
         type="text"
         placeholder="Describe tu mercancía..."
@@ -52,20 +62,24 @@ export default function App() {
           padding: "0.5rem",
           fontSize: "1rem",
           borderRadius: "8px",
-          border: "1px solid #ccc"
+          border: "1px solid #ccc",
         }}
       />
+
       <button
         onClick={handleClassify}
         disabled={loading || input.length < 3}
         style={{
-          backgroundColor: "#7c3aed",
+          background: "linear-gradient(90deg, rgb(0, 190, 127) 0%, rgb(0, 144, 177) 50%, rgb(0, 89, 223) 100%)",
           color: "white",
           padding: "0.5rem 1rem",
           borderRadius: "8px",
           border: "none",
           cursor: "pointer",
-          marginBottom: "1rem"
+          marginBottom: "1rem",
+          fontSize: "14px",
+          transition: "all 0.3s ease",
+
         }}
       >
         {loading ? "Clasificando..." : "Clasificar con IA"}
@@ -81,10 +95,12 @@ export default function App() {
             backgroundColor: "white",
             borderRadius: "12px",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            padding: "1rem"
+            padding: "1rem",
           }}
         >
-          <p style={{ fontSize: "0.875rem", color: "#6b7280" }}>Respuesta de la IA:</p>
+          <p style={{ fontSize: "0.875rem", color: "#6b7280" }}>
+            Respuesta de la IA:
+          </p>
           <p style={{ fontSize: "1.125rem", fontWeight: "600" }}>{suggestion}</p>
         </motion.div>
       )}
